@@ -10,12 +10,29 @@ Once logged in, a menu should be presented. Once the menu item has been selected
 string username = "user";
 string password = "Password123";
 
-string inputUsername;
-string inputPassword;
+string inputUsername = InputCredentials("Username");
+string inputPassword = InputCredentials("Password");
 
-inputUsername = InputCredentials("Username");
+//Checks to see if the user inputs were correct
+while (true)
+{
+    if (string.Equals(inputUsername, username, StringComparison.OrdinalIgnoreCase) && string.Equals(inputPassword, password))
+    {
+        Console.WriteLine("""
+        You have inputted the correct password and username.
+        You may now proceed onto the menu.
+        Hope you will have a wonderful time exploring our options
+        """);
+        break;
+    }
+    else
+    {
+        Console.WriteLine("You have inputted the wrong username or password. Try again");
+        inputUsername = InputCredentials("Username");
+        inputPassword = InputCredentials("Password");
 
-inputPassword = InputCredentials("Password");
+    }
+}
 
 
 //Method allows for the input of credentials
@@ -38,6 +55,4 @@ string InputCredentials(string inputTerm)
     }
     return inputIn;
 }
-
-
 
