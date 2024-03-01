@@ -9,9 +9,10 @@ Once logged in, a menu should be presented. Once the menu item has been selected
 string username = "user";
 string password = "Password123";
 
-//Inputting of username and password
+//Inputting of username
 Console.Write("Username: ");
 string inputUsername;
+//does not allow user to skip input
 while (true)
 {
     inputUsername = Console.ReadLine();
@@ -24,6 +25,18 @@ while (true)
         break; 
 }
 
+//Inputting of password
 Console.Write("Password: ");
-String inputPassword = Console.ReadLine();
-
+string inputPassword;
+//Does not allow user to skip input
+while (true)
+{
+    inputPassword = Console.ReadLine();
+    if (inputPassword == "")
+        Console.Write("""
+            Please input a Password
+            Password: 
+            """);
+    else
+        break;
+}
