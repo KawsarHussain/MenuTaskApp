@@ -34,10 +34,12 @@ string menu = """
     1. Manage Self
     2. Manage Another User
     3. Upload Video
-    4. EXit
+    4. Exit
     """;
 
 Console.WriteLine(menu);
+
+
 int inputMenuNumber = InputMenu();
 while (inputMenuNumber != 4) //Want it to loop if the user does not exit the program
 {
@@ -57,9 +59,13 @@ while (inputMenuNumber != 4) //Want it to loop if the user does not exit the pro
             Console.WriteLine("Exit");
             break;
     }
-    Console.WriteLine(menu);
+    Console.WriteLine($"What else would you like to do? \n{menu}");
     inputMenuNumber = InputMenu();
 }
+
+//This part is only reached once the user exits out of the menu
+Console.WriteLine("Hope you have had a wonderfule time navigating this menu. Thank you and goodbye.");
+
 
 //Method to handle menu input
 int InputMenu()
@@ -74,16 +80,18 @@ int InputMenu()
         {
             inputNumber = Int32.Parse(inputMenuOption); //Checks to see if the value can be converted to int
             if (inputNumber >= 1 && inputNumber <= 4) //Breaking condition
+            {
+                Console.Clear();
                 break;
+            }
         }
         catch (FormatException) // If input cannot be parsed into string
         {
+            Console.Clear();
             Console.WriteLine("Do not input a string.");
         }
         inputMenuOption = "";
-        Console.Clear();
-        Console.WriteLine("Please input a number between 1-4");
-        Console.WriteLine(menu);
+        Console.WriteLine($"Please input a number between 1-4 \n{menu}");
     }
     return inputNumber;
 }
