@@ -70,29 +70,34 @@ Console.WriteLine("Hope you have had a wonderfule time navigating this menu. Tha
 //Method to handle menu input
 int InputMenu()
 {
-    string inputMenuOption = "";
+    string inputMenuOption;
     int inputNumber = -1;
+    bool wrongInputType;
     //Validates the input for the menu options
-    while (inputMenuOption == "")
+    do
     {
         inputMenuOption = Console.ReadLine();
         try
         {
+            wrongInputType = false;
             inputNumber = Int32.Parse(inputMenuOption); //Checks to see if the value can be converted to int
-            if (inputNumber >= 1 && inputNumber <= 4) //Breaking condition
-            {
-                Console.Clear();
-                break;
-            }
         }
-        catch (FormatException) // If input cannot be parsed into string
+        catch (FormatException) // If input cannot be parsed into integer
+        {
+            wrongInputType = true;   
+        }
+
+        if (inputNumber >= 1 && inputNumber <= 4) //Breaking condition
+            Console.Clear();
+        else
         {
             Console.Clear();
-            Console.WriteLine("Do not input a string.");
+            inputMenuOption = "";//Made to be "" so it doesn't break out of loop
+            if (wrongInputType) Console.WriteLine("Do not input a string."); //If the input is a string, it outputs this
+            Console.WriteLine($"Please input a number between 1-4 \n{menu}");
         }
-        inputMenuOption = "";
-        Console.WriteLine($"Please input a number between 1-4 \n{menu}");
     }
+    while (inputMenuOption == "");
     return inputNumber;
 }
 
