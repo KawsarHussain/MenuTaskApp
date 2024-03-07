@@ -5,17 +5,24 @@ Passwords should be case specific
 Once logged in, a menu should be presented. Once the menu item has been selected, just repeat the menu selection back
 */
 
+//Set up user dictionary. Keys are in lower case
+Dictionary<string/*Username*/, string/*Password*/> users = new Dictionary<string, string>(); //username in lower case
+users.Add("user1", "Password1");
+users.Add("user2", "Password2");
 
 //Set up username and password. Changed to do-while
 string username = "user";
 string password = "Password123";
+string inputUsername;
+string inputPassword;
 bool check;
+
+//Implemented the checking credentials using a diectionary
 do
 {
-    string inputUsername = InputCredentials("Username");
-    string inputPassword = InputCredentials("Password");
-    //Checks if user input is correct
-    check = string.Equals(inputUsername, username, StringComparison.OrdinalIgnoreCase) && string.Equals(inputPassword, password);
+    inputUsername = InputCredentials("Username").ToLower();//Ensures case insensitivity
+    inputPassword = InputCredentials("Password");
+    check = users.ContainsKey(inputUsername) && inputPassword.Equals(users[inputUsername]);
     if (!check)
     {
         //Incorrect Credentials
@@ -23,6 +30,20 @@ do
         Console.WriteLine("You have inputted the wrong username or password. Try again");
     }
 } while (!check);
+
+//do
+//{
+//    string inputUsername = InputCredentials("Username");
+//    string inputPassword = InputCredentials("Password");
+//    //Checks if user input is correct
+//    check = string.Equals(inputUsername, username, StringComparison.OrdinalIgnoreCase) && string.Equals(inputPassword, password);
+//    if (!check)
+//    {
+//        //Incorrect Credentials
+//        Console.Clear();
+//        Console.WriteLine("You have inputted the wrong username or password. Try again");
+//    }
+//} while (!check);
 
 Console.Clear();
 
@@ -34,7 +55,7 @@ string menu = """
     """;
 
 Console.WriteLine($"""
-        You have inputted the correct username and password.
+        Welcome {inputUsername}!!!
         You may now proceed onto the menu.
         Hope you will have a wonderful time exploring our options
         Make sure to input a number between 1-4 to select the menu option
@@ -67,7 +88,7 @@ do
 
 
 //This part is only reached once the user exits out of the menu
-Console.WriteLine("Hope you have had a wonderfule time navigating this menu. Thank you and goodbye.");
+Console.WriteLine($"Hope you have had a wonderful time navigating this menu {inputUsername}. Thank you and goodbye.");
 
 
 //Method to handle menu input
@@ -107,17 +128,17 @@ int InputMenu()
 string InputCredentials(string inputTerm)
 {
     Console.Write($"{inputTerm}: ");
-    string inputIn = Console.ReadLine();
-    
-    //does not allow user to skip input
-    while (inputIn == "")
+    string inputIn;
+    //Prevents User from skipping input
+    do
     {
-        Console.Write($"""
-         Please input a {inputTerm}
-         {inputTerm}: 
-         """);
         inputIn = Console.ReadLine();
-    }
+        if (inputIn == "")
+            Console.Write($"""
+             Please input a {inputTerm}
+             {inputTerm}: 
+             """);
+    } while (inputIn == "");
     return inputIn;
 }
 
